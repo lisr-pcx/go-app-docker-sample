@@ -98,7 +98,9 @@ Then build the container image via command (VS CODE terminal):
 Check the list of available images:  
 `$ docker image list`
 
-Finally create and run (in detached mode `-d`)the container choosing the desired image:  
+Further information on build process [here](https://docs.docker.com/build)
+
+Finally create and run (in detached mode `-d`) the container choosing the desired image:  
 `$ docker run -d -p 7000:9000 --name test-app go-docker-app:alpha`
 
 Check container status:  
@@ -106,7 +108,13 @@ Check container status:
 
 ### Optimization
 
-Containers must have a small footprint. Working on **Dockerfile** with composition the final size can be reduced.
+Containers must have a small footprint. Below few best practices.
+
++ **Use a minimal base image** lightweight distro as Alpine Linux can reduce the final size of the image and improve startup time.
++ **Leverage caching**:** order the instructions in the **Dockerfile** from least likely to change to most likely to change (avoid unnecessary rebuilds).
++ **Use multi-stage builds** Multi-stage builds allow you to create intermediate images during the build process, which can help reduce the size of the final image. This is especially useful when building applications with multiple build dependencies.
++ **Optimize layers** Each instruction in a **Dockerfile** creates a new layer in the image. Minimize the number of layers to reduce size and improve performance.
++ **Use .dockerignore**
 
 ## Resources
 
@@ -117,3 +125,5 @@ Information have been collected from other sites and tutorials.
 
 [Developing GO apps with Docker](https://youtu.be/_0CpkisjPPM)  
 [Create Docker container with GO App](https://youtu.be/C5y-14YFs_8)
+
+[Mastering Dockerfile Composition](https://medium.com/@gauravkachariya/mastering-dockerfile-composition-a-comprehensive-guide-to-crafting-efficient-containerization-9cc967ad038c)

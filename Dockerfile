@@ -1,21 +1,14 @@
-# # Basic image for the container
-FROM golang:1.23.1
-
-# # Set working directory inside the container
+# Example using multi-stage
+FROM golang:1.23.1 AS start_build
 WORKDIR /app
-
-# # Copy application files
 COPY go.mod .
-COPY *.go .
-
-# # Install dependencies
 RUN go mod download
-
-# # Build application
+COPY *.go .
+RUN CGO_ENABLED=0 GOOS=linux go build -o /opt/go-docker-multistage
 RUN go build -o /application
 
-# # Enable container network port
+# Final stage
+FROM alpine:latest
+COPY --from=start_build /opt/go-docker-multistage /opt/go-docker-multistage
 EXPOSE 9000
-
-# # Run application
-CMD [ "/application" ]
+ENTRYPOINT [ "/opt/go-docker-multistage" ]
