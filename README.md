@@ -1,6 +1,6 @@
 # go-app-docker-sample
 
-Example of GO application distributed via Docker container for education purpose.
+Example of GO application distributed via Docker container for educational purpose.
 
 ## Setup development environment
 
